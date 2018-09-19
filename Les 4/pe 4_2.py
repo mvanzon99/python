@@ -1,0 +1,5 @@
+PerUur = (input("Hoeveel verdien je per uur?"))
+UurGewerkt = (input("Hoeveel uur heb je gewerkt?"))
+Peruur = (float(PerUur))
+UurGewerkt = (int(UurGewerkt))
+print (str(UurGewerkt) + " uur werken levert je "+ str(Peruur * UurGewerkt) + "Euro op!")

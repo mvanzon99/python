@@ -43,3 +43,6 @@ print(ritprijs(5, False, 20))
 
 #8: An 80-year-old travels 225 kilometres on a weekday.
 print(ritprijs(80, False, 225))
+
+#9: Negative test
+print(ritprijs(15, False, -6))

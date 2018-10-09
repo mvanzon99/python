@@ -8,8 +8,9 @@ def toon_aantal_kluizen_vrij():
     tel = 0
     resultaat = 12 - tel
     for regel in lees_kluizen.readlines():
-        tel += 1
-        resultaat = 12 - tel
+        if len(regel) > 2:
+            tel += 1
+            resultaat = 12 - tel
     print('Het aantal beschikbare bagagekluizen is: {}'.format(resultaat))
 
 def nieuwe_kluis():
@@ -19,9 +20,10 @@ def nieuwe_kluis():
     global lees_kluizen
 
     for regel in lees_kluizen.readlines():
-        regel = regel.split(";")
-        nummer = int(regel[0])
-        kluizen_nieuw.remove(nummer)
+        if len(regel) >2:
+            regel = regel.split(";")
+            nummer = int(regel[0])
+            kluizen_nieuw.remove(nummer)
         lees_kluizen.close()
 
     if len(kluizen_nieuw) == 0:
@@ -42,18 +44,21 @@ def kluis_openen():
     global lees_kluizen
 
     for regel in lees_kluizen.readlines():
-        regel = regel.split(";")
-        nummer = str(regel[0])
-        ww = str(regel[1])
-        lees_kluizen.close()
-        if nummer == kluis and ww == (wachtwoord):
-            print("Gegevens zijn juist, uw kluisje is open!")
-            break
-        elif nummer == kluis and ww != (wachtwoord):
-            print("Het wachtwoord is onjuist!")
-            break
-    else:
-        print("Ingevoerde kluisje ontbreekt in database!")
+        if len(regel) >2:
+            regel = regel.split(";")
+            nummer = str(regel[0])
+            ww = str(regel[1])
+            lees_kluizen.close()
+            if nummer == kluis and ww == (wachtwoord + "\n") or ww == wachtwoord:
+                print("Gegevens zijn juist, uw kluisje is open!")
+                break
+            elif nummer == kluis and ww != (wachtwoord):
+                print("Het wachtwoord is onjuist!")
+                break
+        if len(regel) <=2:
+            continue
+        else:
+            print("Ingevoerde kluisje ontbreekt in database!")
 
 def kluis_teruggeven():
     kluisje = str(input("Voer uw kluisnummer in:"))
@@ -61,28 +66,29 @@ def kluis_teruggeven():
     global lees_kluizen
 
     for lijn in lees_kluizen.readlines():
-        lijn = lijn.split(";")
-        nummer = str(lijn[0])
-        ww = str(lijn[1])
-        lees_kluizen.close()
-        if nummer == kluisje and ww ==(wachtwoord):
-            regel = kluisje + ';' + wachtwoord
-            lijn_verwijderd = 0
-            global lees_kluizen_plus
-            lijnen = lees_kluizen_plus.readlines()
-            lees_kluizen_plus.seek(0)
-            for lijn in lijnen:
-                if not lijn.startswith(str(regel)):
-                    lees_kluizen_plus.write(lijn)
-                else:
-                    print("Het verwijderen van kluisnummer", kluisje, "is gelukt!")
-                    lijn_verwijderd += 1
-            lees_kluizen_plus.truncate()
-            lees_kluizen_plus.close()
-            break
-        elif nummer == kluisje and ww != (wachtwoord + '\n'):
-            print("Het wachtwoord is onjuist!")
-            break
+        if len(lijn) > 2:
+            lijn = lijn.split(";")
+            nummer = str(lijn[0])
+            ww = str(lijn[1])
+            lees_kluizen.close()
+            if nummer == kluisje and ww == (wachtwoord + "\n") or ww == wachtwoord:
+                regel = kluisje + ';' + wachtwoord
+                lijn_verwijderd = 0
+                global lees_kluizen_plus
+                lijnen = lees_kluizen_plus.readlines()
+                lees_kluizen_plus.seek(0)
+                for lijn in lijnen:
+                    if not lijn.startswith(str(regel)):
+                        lees_kluizen_plus.write(lijn)
+                    else:
+                        print("Het verwijderen van kluisnummer", kluisje, "is gelukt!")
+                        lijn_verwijderd += 1
+                lees_kluizen_plus.truncate()
+                lees_kluizen_plus.close()
+                break
+            elif nummer == kluisje and ww != (wachtwoord + '\n'):
+                print("Het wachtwoord is onjuist!")
+                break
     else:
         print("Ingevoerde kluisje ontbreekt in database!")
 

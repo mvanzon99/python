@@ -1,4 +1,13 @@
-print('Goedendag!' '\n')
+import datetime
+import locale
+locale.setlocale(locale.LC_ALL, "nl_NL")
+def tijd():
+    vandaag = datetime.datetime.today()
+    s = str(vandaag.strftime("%A %d %B %Y, %T."))
+    return(s)
+
+print('Goedendag!' '\n'
+      "Het is vandaag " + tijd())
 lees_kluizen = open('Kluizen.txt', 'r')
 lees_kluizen_plus = open('Kluizen.txt', 'r+')
 kluizen_append = open('Kluizen.txt', 'a')
@@ -44,7 +53,7 @@ def kluis_openen():
     global lees_kluizen
 
     for regel in lees_kluizen.readlines():
-        if len(regel) >2:
+        if len(regel) > 2:
             regel = regel.split(";")
             nummer = str(regel[0])
             ww = str(regel[1])
@@ -52,13 +61,12 @@ def kluis_openen():
             if nummer == kluis and ww == (wachtwoord + "\n") or ww == wachtwoord:
                 print("Gegevens zijn juist, uw kluisje is open!")
                 break
-            elif nummer == kluis and ww != (wachtwoord):
+            elif nummer == kluis and ww != (wachtwoord + '\n'):
                 print("Het wachtwoord is onjuist!")
                 break
-        if len(regel) <=2:
-            continue
-        else:
-            print("Ingevoerde kluisje ontbreekt in database!")
+    else:
+        print("Ingevoerde kluisje ontbreekt in database!")
+
 
 def kluis_teruggeven():
     kluisje = str(input("Voer uw kluisnummer in:"))

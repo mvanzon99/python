@@ -1,7 +1,15 @@
-import sys
-""" Voor de exit-functie"""
+import datetime
+import locale
+locale.setlocale(locale.LC_ALL, "nl_NL")
 
-print("---------------------------> Welkom bij de NS Kaartautomaat!")
+def tijd():
+    vandaag = datetime.datetime.today()
+    s = str(vandaag.strftime("%A %d %B %Y." '\n' 
+        'De tijd is ' + "%T." '\n' '\n'))
+    return(s)
+print("Goedendag!" '\n'
+      'het is vandaag ' + tijd())
+print("Welkom bij de NS Kaartautomaat!")
 def inlezen_beginstation(stations):
     begin = str(input("Voer een beginstation in:"))
     while begin not in stations:
@@ -18,14 +26,14 @@ def inlezen_eindstation(stations, beginstation):
     eind = input("Voer een eindstation in:")
 
     while eind not in stations:
-        print("Dit station bestaat niet.")
+        print("Of dit station bestaat niet, of deze trein gaat niet naar " + eind +", of je hebt het station verkeerd ingetypt.")
         eind = input("Voer een eindstation in:")
 
     while stations.index(eind) <= stations.index(beginstation):
         print("Dit kan niet! Je heb de volgorde verkeerd, of je hebt hetzelfde eindstation ingevoerd.")
         eind = input("Voer een eindstation in:")
         while eind not in stations:
-            print("Dit station bestaat niet.")
+            print("Of dit station bestaat niet, of deze trein gaat niet naar " + eind +", of je hebt het station verkeerd ingetypt.")
             eind = input("Voer een eindstation in:")
     print("Invoer OK!")
     return eind
